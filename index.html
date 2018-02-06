@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>2016年安徽教师考编入面分数线查询_安徽教师招聘考试网</title>
+    <link href="css/bootstrap.min.3.3.7.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/jPages.css" rel="stylesheet">
+    <script src="js/jquery.min.3.3.1.js"></script>
+    <script src="js/jPages.js"></script>
+    <style>
+        .fl {
+            float: left;
+        }
+        .mb40 {margin-bottom: 40px;}
+
+        .table th {
+            text-align: center;
+        }
+
+        .table tbody tr td {
+            vertical-align: middle;
+        }
+
+        .mt60 {
+            margin-top: 60px;
+        }
+
+        .form-inline .form-control {
+            width: 180px;
+            margin-left: 10px;
+            margin-right: 5px;
+        }
+
+        .form-group .btn {
+            width: 100px;
+        }
+    </style>
+    <script>
+        function setMenu(str) {
+            var s_menu = [];
+            if (str == "shixian") {
+                // alert ($('#shixian').val());
+                $("select").each(function (k) {
+                    s_menu[k] = $(this).val();
+                });
+
+                $.post('form_post.php', { 'shixian': s_menu[0], 'zpdw': s_menu[1], 'xueduan': s_menu[2], 'xueke': s_menu[3], 'str': str }, function (data) {
+                    $('#shixian').html(data);
+                });
+
+            };
+
+            if (str == "zpdw") {
+
+                $("select").each(function (k) {
+                    s_menu[k] = $(this).val();
+                });
+
+                $.post('form_post.php', { 'shixian': s_menu[0], 'zpdw': s_menu[1], 'xueduan': s_menu[2], 'xueke': s_menu[3], 'str': str }, function (data) {
+                    $('#zpdw').html(data);
+                });
+
+            };
+
+            if (str == "xueduan") {
+
+                $("select").each(function (k) {
+                    s_menu[k] = $(this).val();
+
+                });
+
+                $.post('form_post.php', { 'shixian': s_menu[0], 'zpdw': s_menu[1], 'xueduan': s_menu[2], 'xueke': s_menu[3], 'str': str }, function (data) {
+                    $('#xueduan').html(data);
+                });
+
+            };
+
+            if (str == "xueke") {
+                $("select").each(function (k) {
+                    s_menu[k] = $(this).val();
+                });
+                $.post('form_post.php', { 'shixian': s_menu[0], 'zpdw': s_menu[1], 'xueduan': s_menu[2], 'xueke': s_menu[3], 'str': str }, function (data) {
+                    $('#xueke').html(data);
+                });
+            };
+        };
+        function setQuery(str) {
+            // ** 通过jquery的$.post进行数据异步传输 **
+            var shixian = $('#shixian').val();
+            var zpdw = $('#zpdw').val();
+            var xueduan = $('#xueduan').val();
+            var xueke = $('#xueke').val();
+            $.post('form_post.php', { 'shixian': shixian, 'zpdw': zpdw, 'xueduan': xueduan, 'xueke': xueke, 'str': str }, function (data) {
+                switch (str) {
+                    case 'shixian':
+                        $('#shixian').html(data);
+                        break;
+                    case 'zpdw':
+                        $('#zpdw').html(data);
+                        break;
+                    case 'xueduan':
+                        $('#xueduan').html(data);
+                        break;
+                    case 'xueke':
+                        $('#xueke').html(data);
+                        break;
+                    default:
+                        if (data == 'sql_error') {
+                            alert('请至少选择一个条件！');
+                        } else {
+                            if (data == 'chaxun_error') {
+                                alert('未查询到符合的信息，请重新选择！');
+                            } else {
+                                $('#showForm').html(data);
+                                // 当查询成功后，执行page()函数进行分页
+                                page();
+                            };
+                        };
+                        break;
+                }
+            });
+        };
+        // page()函数用来启动分页功能，固定格式，注意div.holder为分页控制加载的位置，div层可以换为需要的标签。
+        function page() {
+            $(function () {
+                $("div.holder").jPages({
+                    containerID: "itemContainer"
+                });
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container mt60">
+        <h1 class="text-center mb40">2016年安徽教师考编入面分数线查询</h1>
+        <form class="form-inline text-center">
+            <div class="form-group">
+                <label>报考地区</label>
+                <select class="form-control" id="shixian" onmousemove="setMenu('shixian')">
+                    <option>不限</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>招聘单位</label>
+                <select class="form-control" id="zpdw" onmousemove="setMenu('zpdw')">
+                    <option>不限</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>学段</label>
+                <select class="form-control" id="xueduan" onmousemove="setMenu('xueduan')">
+                    <option>不限</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>学科</label>
+                <select class="form-control" id="xueke" onmousemove="setMenu('xueke')">
+                    <option>不限</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-danger" onclick="setQuery('chaxun')">查询</button>
+            </div>
+        </form>
+    </div>
+    <div id="showForm" class="container mt60"></div>
+    <div class="text-center">
+        <!-- 下面div里面为分页控制按钮加载的位置，输出内容以<li><a>……</a></li>格式输出 -->
+        <div class="pagination pagination-lg holder"></div>
+    </div>
+</body>
+
+</html>
