@@ -5,17 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>2016年安徽教师考编入面分数线查询_安徽教师招聘考试网</title>
+    <title>2016年安徽教师考编入面分数线查询</title>
     <link href="css/bootstrap.min.3.3.7.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/jPages.css" rel="stylesheet">
-    <script src="js/jquery.min.3.3.1.js"></script>
-    <script src="js/jPages.js"></script>
+
     <style>
         .fl {
             float: left;
         }
-        .mb40 {margin-bottom: 40px;}
+
+        .mb40 {
+            margin-bottom: 40px;
+        }
 
         .table th {
             text-align: center;
@@ -131,13 +133,15 @@
                     containerID: "itemContainer"
                 });
             });
-        }
+        };
+
     </script>
+    
 </head>
 
 <body>
     <div class="container mt60">
-        <h1 class="text-center mb40">2016年安徽教师考编入面分数线查询</h1>
+        <h1 class="text-center mb40"><span v-html:h1="nowyear"></span>年安徽教师考编入面分数线查询</h1>
         <form class="form-inline text-center">
             <div class="form-group">
                 <label>报考地区</label>
@@ -168,11 +172,40 @@
             </div>
         </form>
     </div>
+    <div id="app" v-bind:class="message">
+        {{ message }}
+    </div>
     <div id="showForm" class="container mt60"></div>
     <div class="text-center">
         <!-- 下面div里面为分页控制按钮加载的位置，输出内容以<li><a>……</a></li>格式输出 -->
         <div class="pagination pagination-lg holder"></div>
     </div>
+    <!-- 引入JS文件，vue.js要先引入 -->
+    <script src="js/vue.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+    <script src="js/jquery.min.3.3.1.js"></script>
+    <script src="js/jPages.js"></script>
+    <script>
+            var app = new Vue({
+               el: '#app',
+               data: {
+                   message: 'Hello Vue!'
+               }
+           });
+           var app2 = new Vue({
+               el: '#app',
+               data: {
+                message: 'table'
+               }
+           });
+           var time = new Date().getFullYear();
+           var year = new Vue({
+               el:'h1',
+               data:{
+                   nowyear: time   
+               }
+           })
+   </script>
 </body>
 
 </html>
